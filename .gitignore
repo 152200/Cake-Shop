@@ -1,0 +1,28 @@
+## Build artifacts
+bin/
+out/
+target/
+build/
+*/bin/
+*/out/
+
+## Java class files
+*.class
+
+## IDE metadata
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+.vscode/
+
+## Logs & temp files
+*.log
+*.tmp
+*.swp
+
+## Local configs to keep private
+.cursorrules
+commands/
+
