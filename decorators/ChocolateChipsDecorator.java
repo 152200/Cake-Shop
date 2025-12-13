@@ -18,50 +18,71 @@ import cakes.Cake;
  * </pre>
  * 
  * @author Amer Abuyaqob
- * @version 1.0
+ * @version 2.0
  */
 public class ChocolateChipsDecorator extends CakeDecorator {
     
     /** The cost of adding chocolate chips to a cake */
-    private static final double CHOCOLATE_CHIPS_COST = 2.50;
+    private static double CHOCOLATE_CHIPS_COST = 2.50;
+    
+    /** The name of this decoration */
+    private static String CHOCOLATE_CHIPS_NAME = "Chocolate Chips";
 
     /**
      * Constructs a new ChocolateChipsDecorator wrapping the given cake.
      * 
+     * <p>The current values of CHOCOLATE_CHIPS_COST and CHOCOLATE_CHIPS_NAME are
+     * captured as snapshots at construction time, so this object will maintain these
+     * values even if the static fields are changed later.
+     * 
      * @param decoratedCake The cake instance to be decorated with chocolate chips
      */
     public ChocolateChipsDecorator(Cake decoratedCake) {
-        super(decoratedCake);
+        super(decoratedCake, CHOCOLATE_CHIPS_COST, CHOCOLATE_CHIPS_NAME);
+    }
+    
+    //TODO: needs some constraints
+    /**
+     * Sets the cost of adding chocolate chips to a cake.
+     * 
+     * <p>Changing this value only affects new ChocolateChipsDecorator instances created
+     * after this call. Existing instances maintain their original cost snapshot.
+     * 
+     * @param cost The new cost for chocolate chips decoration
+     */
+    public static void setChocolateChipsCost(double cost) {
+        CHOCOLATE_CHIPS_COST = cost;
+    }
+    
+    //TODO: needs some constraints
+    /**
+     * Sets the name of this decoration.
+     * 
+     * <p>Changing this value only affects new ChocolateChipsDecorator instances created
+     * after this call. Existing instances maintain their original name snapshot.
+     * 
+     * @param name The new name for chocolate chips decoration
+     */
+    public static void setChocolateChipsName(String name) {
+        CHOCOLATE_CHIPS_NAME = name;
+    }
+    
+    /**
+     * Gets the current cost of adding chocolate chips to a cake.
+     * 
+     * @return The current cost of chocolate chips decoration
+     */
+    public static double getChocolateChipsCost() {
+        return CHOCOLATE_CHIPS_COST;
+    }
+    
+    /**
+     * Gets the current name of this decoration.
+     * 
+     * @return The current name of chocolate chips decoration
+     */
+    public static String getChocolateChipsName() {
+        return CHOCOLATE_CHIPS_NAME;
     }
 
-    /**
-     * Returns the description of the cake with chocolate chips added.
-     * 
-     * <p>Appends " with Chocolate Chips" to the wrapped cake's description.
-     * If the cake already has decorations, this will be part of the chain.
-     * 
-     * @return A description of the cake including chocolate chips
-     */
-    @Override
-    public String describe() {
-        String baseDescription = decoratedCake.describe();
-        // Check if description already contains "with" to determine connector
-        if (baseDescription.contains("with")) {
-            return baseDescription + " and Chocolate Chips";
-        } else {
-            return baseDescription + " with Chocolate Chips";
-        }
-    }
-
-    /**
-     * Returns the total cost of the cake including chocolate chips.
-     * 
-     * <p>Adds the chocolate chips cost to the wrapped cake's total cost.
-     * 
-     * @return The total cost including the base cake and chocolate chips
-     */
-    @Override
-    public double getCost() {
-        return decoratedCake.getCost() + CHOCOLATE_CHIPS_COST;
-    }
 }
