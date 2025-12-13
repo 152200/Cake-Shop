@@ -10,31 +10,49 @@ import cakes.Cake;
  * modifying the original cake object.
  * 
  * <p>Concrete decorators (e.g., ChocolateChips, Cream, Skittles) extend this
- * class and pass their decoration name and cost via the constructor. Both the
- * description grammar logic and cost calculation are centralized here.
+ * class and provide their decoration name and cost via abstract getter methods.
+ * Both the description grammar logic and cost calculation are centralized here.
+ * 
+ * <p>The decoration cost and name are read from static fields in each concrete
+ * decorator class, allowing them to be changed and affecting all instances of
+ * that decorator class.
  * 
  * @author Amer Abuyaqob
  * @version 1.0
  */
 public abstract class CakeDecorator extends Cake {
     protected Cake decoratedCake;
-    protected double decorationCost;
-    protected String decorationName;
 
     /**
      * Constructs a new CakeDecorator wrapping the given cake.
      * 
      * @param decoratedCake The cake instance to be decorated
-     * @param decorationCost The cost of this decoration to be added to the total
-     * @param decorationName The name of this decoration (e.g., "Cream", "Chocolate Chips")
      */
-    public CakeDecorator(Cake decoratedCake, double decorationCost, String decorationName) {
+    public CakeDecorator(Cake decoratedCake) {
         super(decoratedCake.getOrderID(), decoratedCake.getBaseName(), 
               decoratedCake.getSize(), decoratedCake.getBasePrice());
         this.decoratedCake = decoratedCake;
-        this.decorationCost = decorationCost;
-        this.decorationName = decorationName;
     }
+    
+    /**
+     * Gets the cost of this decoration.
+     * 
+     * <p>Concrete decorators must implement this to return their decoration cost
+     * from a static field, allowing the cost to be changed and affecting all instances.
+     * 
+     * @return The cost of this decoration
+     */
+    protected abstract double getDecorationCost();
+    
+    /**
+     * Gets the name of this decoration.
+     * 
+     * <p>Concrete decorators must implement this to return their decoration name
+     * from a static field, allowing the name to be changed and affecting all instances.
+     * 
+     * @return The name of this decoration
+     */
+    protected abstract String getDecorationName();
 
     /**
      * Returns the description of the decorated cake.
@@ -46,23 +64,24 @@ public abstract class CakeDecorator extends Cake {
      *   <li>3rd+ decorations: "Cake with X, Y, and [Decoration]" (Oxford comma style)</li>
      * </ul>
      * 
-     * <p>Concrete decorators pass their decoration name via the constructor and do not
-     * need to override this method.
+     * <p>This method uses {@link #getDecorationName()} to get the decoration name,
+     * ensuring it always uses the current value from the concrete decorator's static field.
      * 
      * @return A description of the cake with all decorations
      */
     @Override
     public String describe() {
         String baseDescription = this.decoratedCake.describe();
+        String decorationName = getDecorationName();  // Always read current value
         
         // If no "with" exists, this is the first decoration
         if (!baseDescription.contains("with")) {
-            return baseDescription + " with " + this.decorationName;
+            return baseDescription + " with " + decorationName;
         }
         
         // If "with" exists but no ", " or " and ", this is the second decoration
         if (!baseDescription.contains(", ") && !baseDescription.contains(" and ")) {
-            return baseDescription + " and " + this.decorationName;
+            return baseDescription + " and " + decorationName;
         }
         
         // If commas or "and" exist, this is third or later decoration (convert to Oxford comma style)
@@ -76,7 +95,7 @@ public abstract class CakeDecorator extends Cake {
             int lastCommaAndIndex = decorations.lastIndexOf(", and ");
             String beforeLast = decorations.substring(0, lastCommaAndIndex);
             String afterLast = decorations.substring(lastCommaAndIndex + 6); // Skip ", and "
-            return beforeWith + " with " + beforeLast + ", " + afterLast + ", and " + this.decorationName;
+            return beforeWith + " with " + beforeLast + ", " + afterLast + ", and " + decorationName;
         }
         
         // If it only has " and " (2nd decoration becoming 3rd), convert to Oxford comma style
@@ -85,24 +104,25 @@ public abstract class CakeDecorator extends Cake {
             int andIndex = decorations.lastIndexOf(" and ");
             String first = decorations.substring(0, andIndex);
             String second = decorations.substring(andIndex + 5); // Skip " and "
-            return beforeWith + " with " + first + ", " + second + ", and " + this.decorationName;
+            return beforeWith + " with " + first + ", " + second + ", and " + decorationName;
         }
         
         // Fallback: just add ", and [decorationName]"
-        return baseDescription + ", and " + this.decorationName;
+        return baseDescription + ", and " + decorationName;
     }
 
     /**
      * Returns the total cost of the decorated cake.
      * 
      * <p>This method is centralized in the base class and adds the decoration cost
-     * to the wrapped cake's total cost. Concrete decorators pass their cost via the
-     * constructor and do not need to override this method.
+     * to the wrapped cake's total cost. It uses {@link #getDecorationCost()} to get
+     * the decoration cost, ensuring it always uses the current value from the concrete
+     * decorator's static field.
      * 
      * @return The total cost including all decorations
      */
     @Override
     public double getCost() {
-        return this.decoratedCake.getCost() + this.decorationCost;
+        return this.decoratedCake.getCost() + getDecorationCost();  // Always read current value
     }
 }

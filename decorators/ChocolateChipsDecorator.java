@@ -23,10 +23,10 @@ import cakes.Cake;
 public class ChocolateChipsDecorator extends CakeDecorator {
     
     /** The cost of adding chocolate chips to a cake */
-    private static final double CHOCOLATE_CHIPS_COST = 2.50;
+    private static double CHOCOLATE_CHIPS_COST = 2.50;
     
     /** The name of this decoration */
-    private static final String CHOCOLATE_CHIPS_NAME = "Chocolate Chips";
+    private static String CHOCOLATE_CHIPS_NAME = "Chocolate Chips";
 
     /**
      * Constructs a new ChocolateChipsDecorator wrapping the given cake.
@@ -34,7 +34,67 @@ public class ChocolateChipsDecorator extends CakeDecorator {
      * @param decoratedCake The cake instance to be decorated with chocolate chips
      */
     public ChocolateChipsDecorator(Cake decoratedCake) {
-        super(decoratedCake, CHOCOLATE_CHIPS_COST, CHOCOLATE_CHIPS_NAME);
+        super(decoratedCake);
+    }
+    
+    /**
+     * Gets the cost of adding chocolate chips to a cake.
+     * 
+     * @return The current cost of chocolate chips decoration
+     */
+    @Override
+    protected double getDecorationCost() {
+        return CHOCOLATE_CHIPS_COST;
+    }
+    
+    /**
+     * Gets the name of this decoration.
+     * 
+     * @return The current name of chocolate chips decoration
+     */
+    @Override
+    protected String getDecorationName() {
+        return CHOCOLATE_CHIPS_NAME;
+    }
+    
+    //TODO: needs some constraints
+    /**
+     * Sets the cost of adding chocolate chips to a cake.
+     * Changing this value affects all instances of ChocolateChipsDecorator.
+     * 
+     * @param cost The new cost for chocolate chips decoration
+     */
+    public static void setChocolateChipsCost(double cost) {
+        CHOCOLATE_CHIPS_COST = cost;
+    }
+    
+    //TODO: needs some constraints
+    /**
+     * Sets the name of this decoration.
+     * Changing this value affects all instances of ChocolateChipsDecorator.
+     * 
+     * @param name The new name for chocolate chips decoration
+     */
+    public static void setChocolateChipsName(String name) {
+        CHOCOLATE_CHIPS_NAME = name;
+    }
+    
+    /**
+     * Gets the current cost of adding chocolate chips to a cake.
+     * 
+     * @return The current cost of chocolate chips decoration
+     */
+    public static double getChocolateChipsCost() {
+        return CHOCOLATE_CHIPS_COST;
+    }
+    
+    /**
+     * Gets the current name of this decoration.
+     * 
+     * @return The current name of chocolate chips decoration
+     */
+    public static String getChocolateChipsName() {
+        return CHOCOLATE_CHIPS_NAME;
     }
 
 }

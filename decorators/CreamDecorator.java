@@ -22,10 +22,10 @@ import cakes.Cake;
 public class CreamDecorator extends CakeDecorator {
     
     /** The cost of adding cream to a cake */
-    private static final double CREAM_COST = 2.0;
+    private static double CREAM_COST = 2.0;
     
     /** The name of this decoration */
-    private static final String CREAM_NAME = "Cream";
+    private static String CREAM_NAME = "Cream";
 
     /**
      * Constructs a new CreamDecorator wrapping the given cake.
@@ -33,7 +33,67 @@ public class CreamDecorator extends CakeDecorator {
      * @param decoratedCake The cake instance to be decorated with cream
      */
     public CreamDecorator(Cake decoratedCake) {
-        super(decoratedCake, CREAM_COST, CREAM_NAME);
+        super(decoratedCake);
+    }
+    
+    /**
+     * Gets the cost of adding cream to a cake.
+     * 
+     * @return The current cost of cream decoration
+     */
+    @Override
+    protected double getDecorationCost() {
+        return CREAM_COST;
+    }
+    
+    /**
+     * Gets the name of this decoration.
+     * 
+     * @return The current name of cream decoration
+     */
+    @Override
+    protected String getDecorationName() {
+        return CREAM_NAME;
+    }
+    
+    //TODO: needs some constraints
+    /**
+     * Sets the cost of adding cream to a cake.
+     * Changing this value affects all instances of CreamDecorator.
+     * 
+     * @param cost The new cost for cream decoration
+     */
+    public static void setCreamCost(double cost) {
+        CREAM_COST = cost;
+    }
+    
+    //TODO: needs some constraints
+    /**
+     * Sets the name of this decoration.
+     * Changing this value affects all instances of CreamDecorator.
+     * 
+     * @param name The new name for cream decoration
+     */
+    public static void setCreamName(String name) {
+        CREAM_NAME = name;
+    }
+    
+    /**
+     * Gets the current cost of adding cream to a cake.
+     * 
+     * @return The current cost of cream decoration
+     */
+    public static double getCreamCost() {
+        return CREAM_COST;
+    }
+    
+    /**
+     * Gets the current name of this decoration.
+     * 
+     * @return The current name of cream decoration
+     */
+    public static String getCreamName() {
+        return CREAM_NAME;
     }
 
 }
