@@ -1,36 +1,32 @@
-
 package decorators;
 
 import cakes.Cake;
 
 /**
  * Concrete decorator that adds cream to a cake.
- *
- * <p>This decorator wraps a {@link Cake} instance and enhances its description
- * by appending "with Cream" and increases the cost by a fixed amount.
- * It follows the Decorator pattern to add features without modifying the base cake.
- *
+ * 
+ * <p>This decorator wraps a {@link Cake} instance and enhances it by adding
+ * cream to the description and adding the cream cost to the total price.
+ * 
  * <p>Example usage:
  * <pre>
  * Cake base = new ChocolateCake(1, "Large", 12.50);
  * Cake decorated = new CreamDecorator(base);
- * System.out.println(decorated.describe()); // "Order #1: Chocolate Cake (Large) with Cream"
- * System.out.println(decorated.getCost()); // 14.50
+ * // Result: "Order #1: Chocolate Cake (Large) with Cream"
+ * // Cost: 12.50 + 2.00 = 14.50
  * </pre>
  *
  * @author Mustafa Abu Saffaqa
  * @version 1.0
  */
 public class CreamDecorator extends CakeDecorator {
-
-    /**
-     * The additional cost for adding cream to the cake.
-     */
+    
+    /** The cost of adding cream to a cake */
     private static final double CREAM_COST = 2.0;
 
     /**
      * Constructs a new CreamDecorator wrapping the given cake.
-     *
+     * 
      * @param decoratedCake The cake instance to be decorated with cream
      */
     public CreamDecorator(Cake decoratedCake) {
@@ -48,9 +44,11 @@ public class CreamDecorator extends CakeDecorator {
     }
 
     /**
-     * Returns the total cost of the decorated cake including the cream cost.
-     *
-     * @return The total cost including the cream addition
+     * Returns the total cost of the cake including cream.
+     * 
+     * <p>Adds the cream cost to the wrapped cake's total cost.
+     * 
+     * @return The total cost including the base cake and cream
      */
     @Override
     public double getCost() {
