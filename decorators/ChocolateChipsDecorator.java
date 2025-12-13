@@ -37,14 +37,15 @@ public class ChocolateChipsDecorator extends CakeDecorator {
     /**
      * Returns the description of the cake with chocolate chips added.
      * 
-     * <p>Appends " with Chocolate Chips" to the wrapped cake's description.
-     * If the cake already has decorations, this will be part of the chain.
+     * <p>Appends " with Chocolate Chips" or " and Chocolate Chips" to the wrapped cake's description
+     * depending on whether the cake already has decorations. If the cake already
+     * has decorations (contains "with"), it uses "and" to chain decorations.
      * 
      * @return A description of the cake including chocolate chips
      */
     @Override
     public String describe() {
-        String baseDescription = decoratedCake.describe();
+        String baseDescription = this.decoratedCake.describe();
         // Check if description already contains "with" to determine connector
         if (baseDescription.contains("with")) {
             return baseDescription + " and Chocolate Chips";
@@ -62,6 +63,6 @@ public class ChocolateChipsDecorator extends CakeDecorator {
      */
     @Override
     public double getCost() {
-        return decoratedCake.getCost() + CHOCOLATE_CHIPS_COST;
+        return this.decoratedCake.getCost() + CHOCOLATE_CHIPS_COST;
     }
 }
