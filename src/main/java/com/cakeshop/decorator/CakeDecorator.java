@@ -12,16 +12,16 @@ public abstract class CakeDecorator extends Cake {
 
     @Override
     public String getDescription() {
-        return decoratedCake.getDescription();
+        return this.decoratedCake.getDescription();
     }
 
     @Override
     public double getCost() {
-        return decoratedCake.getCost();
+        return this.decoratedCake.getCost();
     }
 
     @Override
     public String prepare() {
-        return decoratedCake.prepare();
+        return this.decoratedCake.prepare();
     }
 }

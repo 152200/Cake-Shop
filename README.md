@@ -46,3 +46,10 @@ Java console application that walks through the entire cake-ordering journey—f
 2. Wrap the ordering workflow inside the Singleton and connect observer dashboards.
 3. Wire up the JSON storage helpers so data hydrates on launch and flushes on shutdown.
 4. Capture console screenshots/logs for the discussion meeting before **16/12/2025**.
+
+
+
+
+
+
+Cake => Decorator => Factory => Singleton => Observer

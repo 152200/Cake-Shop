@@ -9,21 +9,21 @@ public class SkittlesDecorator extends CakeDecorator {
 
     @Override
     public String getDescription() {
-        return decoratedCake.getDescription() + ", decorated with colorful Skittles";
+        return this.decoratedCake.getDescription() + ", decorated with colorful Skittles";
     }
 
     @Override
     public double getCost() {
-        return decoratedCake.getCost() + 4.00;
+        return this.decoratedCake.getCost() + 4.00;
     }
 
     @Override
     public String prepare() {
-        return decoratedCake.prepare() + " Decorating with Skittles...";
+        return this.decoratedCake.prepare() + " Decorating with Skittles...";
     }
 
     @Override
     public String getName() {
-        return decoratedCake.getName() + " with Skittles";
+        return this.decoratedCake.getName() + " with Skittles";
     }
 }

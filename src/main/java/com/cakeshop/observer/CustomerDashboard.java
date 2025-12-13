@@ -21,7 +21,7 @@ public class CustomerDashboard implements OrderObserver {
 
             customerOrders.add(order);
             String notification = String.format(
-                    "🎂 Order #%s is READY!\n" +
+                    "Order #%s is READY!\n" +
                             "   Cake: %s\n" +
                             "   Status: %s\n" +
                             "   Pickup Code: %s",
@@ -42,18 +42,18 @@ public class CustomerDashboard implements OrderObserver {
 
     public void displayDashboard() {
         System.out.println("\n" + "=".repeat(60));
-        System.out.println("📱 CUSTOMER DASHBOARD - " + customerId.toUpperCase());
+        System.out.println("CUSTOMER DASHBOARD - " + customerId.toUpperCase());
         System.out.println("=".repeat(60));
 
         if (notifications.isEmpty()) {
             System.out.println("No orders yet. Place your first order!");
         } else {
-            System.out.println("🔔 RECENT NOTIFICATIONS:");
+            System.out.println("RECENT NOTIFICATIONS:");
             for (Map.Entry<String, String> entry : notifications.entrySet()) {
                 System.out.println("\n" + entry.getValue());
             }
 
-            System.out.println("\n📊 YOUR ORDER HISTORY:");
+            System.out.println("\nYOUR ORDER HISTORY:");
             System.out.printf("%-12s %-25s %-10s %-10s%n",
                     "Order #", "Cake", "Status", "Amount");
             System.out.println("-".repeat(60));

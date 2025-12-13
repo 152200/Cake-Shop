@@ -59,7 +59,7 @@ public class ManagerDashboard implements OrderObserver {
         CakeOrderingSystem orderingSystem = CakeOrderingSystem.getInstance();
 
         System.out.println("\n" + "=".repeat(70));
-        System.out.println("📊 MANAGER DASHBOARD - REAL-TIME ANALYTICS");
+        System.out.println("MANAGER DASHBOARD - REAL-TIME ANALYTICS");
         System.out.println("=".repeat(70));
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -68,7 +68,7 @@ public class ManagerDashboard implements OrderObserver {
         System.out.println("Total Revenue: $" + String.format("%.2f", orderingSystem.getTotalRevenue()));
         System.out.println("Active Orders in Queue: " + orderingSystem.getQueueSize());
 
-        System.out.println("\n🍰 CAKE SALES BREAKDOWN:");
+        System.out.println("\nCAKE SALES BREAKDOWN:");
         System.out.printf("%-25s %-15s %-15s %-15s%n",
                 "Cake Type", "Quantity", "Revenue", "Avg Price");
         System.out.println("-".repeat(70));
@@ -88,11 +88,11 @@ public class ManagerDashboard implements OrderObserver {
             }
         }
 
-        System.out.println("\n📈 TOP PERFORMING CAKE:");
+        System.out.println("\nTOP PERFORMING CAKE:");
         CakeType topSeller = getTopSellingCake();
         System.out.println("   " + topSeller + " - " + cakeSales.get(topSeller) + " sold");
 
-        System.out.println("\n💰 REVENUE STATISTICS:");
+        System.out.println("\nREVENUE STATISTICS:");
         System.out.println("   Total Orders: " + allOrders.size());
         System.out.println("   Average Order Value: $" +
                 String.format("%.2f", calculateAverageOrderValue()));

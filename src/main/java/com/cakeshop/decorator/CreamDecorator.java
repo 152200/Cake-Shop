@@ -9,21 +9,21 @@ public class CreamDecorator extends CakeDecorator {
 
     @Override
     public String getDescription() {
-        return decoratedCake.getDescription() + ", topped with whipped cream";
+        return this.decoratedCake.getDescription() + ", topped with whipped cream";
     }
 
     @Override
     public double getCost() {
-        return decoratedCake.getCost() + 3.00;
+        return this.decoratedCake.getCost() + 3.00;
     }
 
     @Override
     public String prepare() {
-        return decoratedCake.prepare() + " Adding whipped cream...";
+        return this.decoratedCake.prepare() + " Adding whipped cream...";
     }
 
     @Override
     public String getName() {
-        return decoratedCake.getName() + " with Cream";
+        return this.decoratedCake.getName() + " with Cream";
     }
 }
