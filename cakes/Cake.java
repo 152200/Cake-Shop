@@ -13,13 +13,13 @@ package cakes;
  * 
  * @see decorators.CakeDecorator
  * @author Amer Abuyaqob
- * @version 1.0
+ * @version 1.1
  */
 public abstract class Cake{
     //TODO: make orderID auto generated
     protected int orderID;
     protected String baseName;
-    protected String size;
+    protected CakeSize size;
     protected double basePrice;
 
     /**
@@ -28,10 +28,10 @@ public abstract class Cake{
      * 
      * @param orderID The unique identifier for this order
      * @param baseName The name of the base cake type (e.g., "Apple Cake", "Cheese Cake")
-     * @param size The size of the cake
+     * @param size The size of the cake (enum value: SMALL, MEDIUM, or LARGE)
      * @param basePrice The base price of the cake before decorations
      */
-    public Cake(int orderID, String baseName, String size, double basePrice) {
+    public Cake(int orderID, String baseName, CakeSize size, double basePrice) {
         this.orderID = orderID;
         this.baseName = baseName;
         this.size = size;
@@ -78,20 +78,18 @@ public abstract class Cake{
     /**
      * Retrieves the size of the cake.
      * 
-     * @return The size of the cake
+     * @return The size of the cake as a CakeSize enum value
      */
-    public String getSize() {
+    public CakeSize getSize() {
         return size;
     }
 
-
-    //TODO: needs some constraints
     /**
      * Sets the size of the cake.
      * 
-     * @param size The size to assign to the cake
+     * @param size The size to assign to the cake (must be a valid CakeSize enum value)
      */
-    public void setSize(String size) {
+    public void setSize(CakeSize size) {
         this.size = size;
     }
 
