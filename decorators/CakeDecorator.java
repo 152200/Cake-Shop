@@ -36,6 +36,7 @@ public abstract class CakeDecorator extends Cake {
      * @param decorationCost The cost of this decoration (snapshot of static field value)
      * @param decorationName The name of this decoration (snapshot of static field value)
      */
+    //TODO: decorator adds to orderID
     public CakeDecorator(Cake decoratedCake, double decorationCost, String decorationName) {
         super(decoratedCake.getOrderID(), decoratedCake.getBaseName(), 
               decoratedCake.getSize(), decoratedCake.getBasePrice());
