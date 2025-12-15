@@ -26,3 +26,6 @@ build/
 .cursorrules
 commands/
 
+## Temporary files
+temp.md
+
