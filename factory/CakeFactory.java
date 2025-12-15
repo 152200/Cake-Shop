@@ -20,8 +20,8 @@ import java.util.HashMap;
  *   <li>Chocolate Cake: Small $10.50, Medium $12.50, Large $15.00</li>
  * </ul>
  * 
- * <p>Order IDs are automatically generated in the format: [3 letters for cake type]-[1 letter for size]-[sequential number].
- * Examples: APP-L-001, CHE-M-002, CHO-S-003. The counter increments with each cake creation, starting from 1.
+     * <p>Order IDs are automatically generated in the format: [3 letters for cake type]-[1 letter for size]-[sequential number].
+     * Examples: APP-L-001, CHE-M-001, CHO-S-001. Each cake type maintains its own independent counter, starting from 1.
  * 
  * <p>Example usage:
  * <pre>
@@ -35,10 +35,17 @@ import java.util.HashMap;
 public class CakeFactory {
     
     /**
-     * Static counter for generating unique order IDs.
-     * Starts at 1 and increments with each cake creation.
+     * Type-specific counters for generating unique order IDs per cake type.
+     * Each counter starts at 1 and increments independently with each cake creation of that type.
+     * 
+     * <p>This allows each cake type to have its own sequential numbering:
+     * <ul>
+     *   <li>APPLE cakes: APP-S-001, APP-M-002, APP-L-003, etc.</li>
+     *   <li>CHEESE cakes: CHE-S-001, CHE-M-002, CHE-L-003, etc.</li>
+     *   <li>CHOCOLATE cakes: CHO-S-001, CHO-M-002, CHO-L-003, etc.</li>
+     * </ul>
      */
-    public static int orderIDCounter = 1;
+    private static Map<CakeType, Integer> typeCounters;
 
     /**
      * Generates a formatted order ID in the format: [3 letters for cake type]-[1 letter for size]-[sequential number]
@@ -115,9 +122,10 @@ public class CakeFactory {
      */
     private static Map<CakeType, Map<CakeSize, Double>> pricingTable;
 
-    // Static initializer to populate the pricing table with default values
+    // Static initializer to populate the pricing table with default values and initialize type counters
     static {
         initializeDefaultPrices();
+        initializeTypeCounters();
     }
 
     /**
@@ -156,17 +164,30 @@ public class CakeFactory {
     }
 
     /**
+     * Initializes type-specific counters for all cake types.
+     * Each counter starts at 1 and increments independently with each cake creation.
+     */
+    private static void initializeTypeCounters() {
+        typeCounters = new HashMap<>();
+        typeCounters.put(CakeType.APPLE, 1);
+        typeCounters.put(CakeType.CHEESE, 1);
+        typeCounters.put(CakeType.CHOCOLATE, 1);
+    }
+
+    /**
      * Creates a new cake instance based on the specified type and size.
      * 
      * <p>This method automatically:
      * <ul>
-     *   <li>Generates a unique order ID using the static counter</li>
+     *   <li>Generates a unique order ID using the type-specific counter</li>
      *   <li>Calculates the base price from the embedded pricing table</li>
      *   <li>Returns the appropriate concrete cake subclass</li>
      * </ul>
      * 
-     * <p>The order ID counter is incremented after each cake creation to ensure
-     * unique identifiers for subsequent orders.
+     * <p>The type-specific counter is incremented after each cake creation to ensure
+     * unique identifiers for subsequent orders of the same type. Each cake type maintains
+     * its own independent counter (e.g., APP-*-001, CHE-*-001, CHO-*-001 are all valid
+     * for the first cake of each type).
      * 
      * @param type The type of cake to create (APPLE, CHEESE, or CHOCOLATE)
      * @param size The size of the cake (SMALL, MEDIUM, or LARGE)
@@ -181,8 +202,12 @@ public class CakeFactory {
             throw new IllegalArgumentException("Cake size cannot be null");
         }
 
-        // Generate order ID and increment counter
-        String orderID = generateOrderID(type, size, orderIDCounter++);
+        // Get current counter value for this cake type and increment it
+        int currentCount = typeCounters.get(type);
+        typeCounters.put(type, currentCount + 1);
+        
+        // Generate order ID using the type-specific counter
+        String orderID = generateOrderID(type, size, currentCount);
         
         // Calculate base price from pricing table
         double basePrice = getBasePrice(type, size);
@@ -198,6 +223,34 @@ public class CakeFactory {
             default:
                 throw new IllegalArgumentException("Unknown cake type: " + type);
         }
+    }
+
+    /**
+     * Retrieves the count of cakes created for a specific cake type.
+     * 
+     * <p>This method is useful for the ManagerDashboard to display how many cakes
+     * of each type have been ordered. The count reflects the total number of cakes
+     * of the specified type that have been created since the factory was initialized.
+     * 
+     * <p>Note: The count returned is the number that will be used for the NEXT cake
+     * of this type. To get the number of cakes already created, subtract 1 from
+     * the returned value.
+     * 
+     * @param type The cake type to get the count for
+     * @return The current counter value for the specified cake type (will be used for next cake)
+     * @throws IllegalArgumentException if type is null or unknown
+     */
+    public static int getCountForType(CakeType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Cake type cannot be null");
+        }
+        
+        Integer count = typeCounters.get(type);
+        if (count == null) {
+            throw new IllegalArgumentException("Unknown cake type: " + type);
+        }
+        
+        return count;
     }
 
     /**
